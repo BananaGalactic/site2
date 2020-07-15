@@ -12,7 +12,11 @@ exports.product_create = (req, res, next) => {
     .then((item) => {
         if(item == null) {
             product.save()
-            .then(()=> res.status(201).json({message: 'Objet créé !', desc: 'item : ' + req.body.name + ', price: ' + req.body.price}))
+            .then(()=> {
+                console.log('Création de ' + req.body.name + ' par ' + req.connection.remoteAddress);
+                res.status(201).json({message: 'Objet créé !', desc: 'item : '
+                            + req.body.name + ', price: ' + req.body.price})
+                        })
             .catch(err => {console.log(err);res.status(400).json({ message: "error" });});
         } else {
             res.status(423).json({
